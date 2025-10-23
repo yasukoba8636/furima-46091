@@ -1,11 +1,10 @@
 Rails.application.routes.draw do
-  root to: 'orders/index'
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-resources :orders, only: [:index, :create]
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
-  get "up" => "rails/health#show", as: :rails_health_check
+  # Root URL
+  root to: 'orders#index'
 
-  # Defines the root path route ("/")
-  # root "posts#index"
+  # Orders の一覧・作成
+  resources :orders, only: [:index, :create]
+
+  # ヘルスチェック用ルート
+  get 'up', to: 'rails/health#show', as: :rails_health_check
 end
