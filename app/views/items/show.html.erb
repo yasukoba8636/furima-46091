@@ -1,0 +1,38 @@
+<div class="item-show-container">
+  <!-- 商品画像 -->
+  <div class="item-image">
+    <%= image_tag @item.image, class: "item-main-image" if @item.image.attached? %>
+
+    <% if @item.order.present? %>
+      <div class="sold-out-overlay">
+        <span class="sold-out-text">SOLD OUT</span>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- 商品詳細情報 -->
+  <div class="item-details">
+    <h2 class="item-name"><%= @item.name %></h2>
+    <p class="item-price">¥<%= @item.price %>（税込）</p>
+    <p class="item-shipping">配送料の負担：<%= @item.shipping_fee.name %></p>
+    <p class="item-description"><%= @item.description %></p>
+
+    <ul class="item-meta">
+      <li>出品者：<%= @item.user.nickname %></li>
+      <li>カテゴリー：<%= @item.category.name %></li>
+      <li>商品の状態：<%= @item.condition.name %></li>
+      <li>発送元の地域：<%= @item.prefecture.name %></li>
+      <li>発送までの日数：<%= @item.shipping_day.name %></li>
+    </ul>
+
+    <!-- ボタンの出し分け -->
+    <div class="item-actions">
+      <% if user_signed_in? && @item.user == current_user && @item.order.nil? %>
+        <%= link_to "商品の編集", edit_item_path(@item), class: "btn btn-edit" %>
+        <%= link_to "削除", item_path(@item), method: :delete, data: { confirm: "削除してもよろしいですか？" }, class: "btn btn-delete" %>
+      <% elsif user_signed_in? && @item.user != current_user && @item.order.nil? %>
+        <%= link_to "購入画面に進む", item_orders_path(@item), class: "btn btn-buy" %>
+      <% end %>
+    </div>
+  </div>
+</div>

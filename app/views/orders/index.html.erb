@@ -1,1 +1,111 @@
+<h1>購入内容の確認</h1>
+
+<div class="order-container">
+
+  <!-- 商品情報 -->
+  <div class="item-info">
+    <h2>商品情報</h2>
+    <% if @item.present? %>
+      <div class="item-box">
+        <% if @item.image.attached? %>
+          <%= image_tag @item.image, class: "item-image" %>
+        <% else %>
+          <%= image_tag "no_image.png", class: "item-image" %>
+        <% end %>
+        <div class="item-details">
+          <p><strong>商品名：</strong><%= @item.name %></p>
+          <p><strong>価格：</strong>¥<%= @item.price.to_s(:delimited) %></p>
+          <p><strong>商品説明：</strong><%= @item.description %></p>
+        </div>
+      </div>
+    <% else %>
+      <p>商品情報が見つかりません。</p>
+    <% end %>
+  </div>
+
+  <hr>
+
+  <!-- 購入フォーム -->
+  <div class="purchase-form">
+    <h2>購入者情報</h2>
+
+    <%= form_with model: @order_address, url: item_orders_path(@item), local: true do |f| %>
+      <%= render "shared/error_messages", model: f.object %>
+
+      <div class="field">
+        <%= f.label :postal_code, "郵便番号（ハイフンあり）" %><br>
+        <%= f.text_field :postal_code, placeholder: "例: 123-4567" %>
+      </div>
+
+      <div class="field">
+        <%= f.label :prefecture_id, "都道府県" %><br>
+        <%= f.collection_select(:prefecture_id, Prefecture.all, :id, :name, { include_blank: "選択してください" }) %>
+      </div>
+
+      <div class="field">
+        <%= f.label :city, "市区町村" %><br>
+        <%= f.text_field :city, placeholder: "例: 東京都渋谷区" %>
+      </div>
+
+      <div class="field">
+        <%= f.label :address, "番地" %><br>
+        <%= f.text_field :address, placeholder: "例: 神南1-1-1" %>
+      </div>
+
+      <div class="field">
+        <%= f.label :building_name, "建物名（任意）" %><br>
+        <%= f.text_field :building_name, placeholder: "例: 渋谷ビル101" %>
+      </div>
+
+      <div class="field">
+        <%= f.label :phone_number, "電話番号（ハイフンなし）" %><br>
+        <%= f.text_field :phone_number, placeholder: "例: 09012345678" %>
+      </div>
+
+      <div class="field">
+        <%= f.label :token, "クレジットカード情報" %><br>
+        <p>※実際の実装ではJavaScriptでカード情報を安全に送信します。</p>
+      </div>
+
+      <div class="actions">
+        <%= f.submit "購入を確定する", class: "buy-button" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<style>
+.order-container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: sans-serif;
+}
+
+.item-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.item-image {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.buy-button {
+  background-color: #38a169;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+.buy-button:hover {
+  background-color: #2f855a;
+}
+</style>
 

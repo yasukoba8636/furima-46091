@@ -1,0 +1,66 @@
+/* app/assets/stylesheets/items.css */
+
+.item-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: start;
+}
+
+.item-card {
+  width: 220px;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 10px;
+  background-color: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  position: relative;
+  transition: transform 0.2s;
+}
+
+.item-card:hover {
+  transform: translateY(-3px);
+}
+
+.item-image-wrapper {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.item-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.sold-out {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  padding: 3px 8px;
+  font-weight: bold;
+  border-radius: 4px;
+}
+
+.item-info {
+  margin-top: 10px;
+}
+
+.item-name {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.item-price {
+  color: #333;
+  font-size: 14px;
+}
+
+.dummy-item {
+  text-align: center;
+  margin: 40px auto;
+  color: #888;
+}
